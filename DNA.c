@@ -7,7 +7,7 @@
 int pal_len, index;
 char *top, *bottom, *pal_top, *pal_bottom;
 
-void init(){
+int init(){
         top= (char*)calloc(LEN,sizeof(char));
         bottom= (char*)calloc(LEN,sizeof(char));
         pal_top= (char*)calloc(LEN,sizeof(char));
@@ -39,8 +39,7 @@ void output(){
 
 int main()
 {
-        while(1){
-                init();
+        while(init()){
                 input();
 
                 for(int i= 0;(i+pal_len-1)<strlen(top);i++){
