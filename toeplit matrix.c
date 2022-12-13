@@ -3,15 +3,23 @@
 
 #define LENTH 1000
 
-int num[LENTH], arr[LENTH][LENTH];
+int *num, **arr;
+
+int init(){
+        num= (int*)calloc(LENTH, sizeof(int));
+        arr= (int**)calloc(LENTH, sizeof(int*));
+        for(int i=0;i<LENTH;i++)
+                arr[i]= (int*)calloc(LENTH, sizeof(int));
+}
 
 int main()
 {
         int n;
-        printf("Enter n: ");
-        while(scanf("%d", &n)!=EOF){
+        while(init()){
                 int LR= 0, RL= 0;
 
+                printf("Enter n: ");
+                scanf("%d", &n);
                 printf("Enter num: ");
                 for(int i=0;i<n;i++)
                         scanf("%d", num+i);
@@ -43,7 +51,7 @@ int main()
                                 printf("   %d", arr[i][j]);
                         printf("\n");
                 }
-                printf("Diagonal sum \:  %d\n", LR);
+                printf("Diagonal sum \\:  %d\n", LR);
                 printf("Diagonal sum /:  %d\n", RL);
 
                 printf("Enter n: ");
