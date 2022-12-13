@@ -14,8 +14,6 @@ int init(){
         pal_bottom= (char*)calloc(LEN,sizeof(char));
 
         for(int i=0;i<LEN;i++){
-                top[i]= '\0';
-                bottom[i]= '\0';
                 pal_top[i]= '\0';
                 pal_bottom[i]= '\0';
         }
@@ -33,7 +31,8 @@ void output(){
         printf("\nThe DNA:\n%s\n%s\n", top, bottom);
         printf("\nPalindromes of length is %d\n", pal_len);
         printf("\nPalindrome at position %d\n", index);
-        printf("%s\n%s\n", pal_top, pal_bottom);
+        printf("%s\n", pal_top);
+        printf("%s\n", pal_bottom);
         printf("\n=================\n\n");
 }
 
@@ -47,11 +46,11 @@ int main()
                                 continue;
 
                         index= i;
-                        for(int j=i, k=0;j<i+pal_len-1;j++, k++){
+                        for(int j=i, k=0;j<i+pal_len;j++, k++){
                                 if(top[j]!=bottom[i+pal_len-1-k])
                                         break;
                                 pal_top[k]= top[j];
-                                pal_bottom[pal_len-k]= bottom[i+pal_len-1-k];
+                                pal_bottom[pal_len-1-k]=  top[j];
                         }
 
                         if(pal_len==strlen(pal_top))
