@@ -110,8 +110,8 @@ Vector<T>::Vector(const Vector &other) {
     space= other.size();
     arr= new T[capacity];
     size_t j=0;
-    for(auto i: other)
-        arr[j++]= i;
+    for(size_t i=0;i<other.size();i++)
+        arr[j++]= other[i];
 }
 
 // Destructor
@@ -172,7 +172,9 @@ Vector<T> &Vector<T>::operator=(const Vector<T> &other) {
     delete [] this->arr;
 
     this->arr= new T[this->capacity];
-    for(int i=0;i<)
+    for(int i=0;i<this->space;i++)
+        this->arr[i]= other[i];
+    return *this;
 }
 
 // Overloaded subscript operator.
@@ -203,6 +205,16 @@ const T &Vector<T>::operator[](size_t index) const {
 template <typename T>
 std::ostream &operator<<(std::ostream &out, const Vector<T> &v) {
     // TODO
+    out << "[";
+    bool output= false;
+    for(int i=0;i<v.size();i++){
+        if(output)
+            out << ", ";
+        output= true;
+        out << v[i];
+    }
+    out << "]";
+    return out;
 }
 
 // Overloaded stream extraction operator.
@@ -210,6 +222,10 @@ std::ostream &operator<<(std::ostream &out, const Vector<T> &v) {
 template <typename T>
 std::istream &operator>>(std::istream &in, Vector<T> &v) {
     // TODO
+    T input;
+    in >> input;
+    v.push_back(input);
+    return in;
 }
 
 // Overloaded addition operator.
@@ -219,6 +235,15 @@ std::istream &operator>>(std::istream &in, Vector<T> &v) {
 template <typename T>
 Vector<T> Vector<T>::operator+(const Vector<T> &other) const {
     // TODO
+    Vector<T> tmp(this->space+other.size());
+    
+    size_t j=0;
+    for(int i=0;i<this->size();i++)
+        tmp[j++]= this->arr[i];
+    for(int i=0;i<other.size();i++)
+        tmp[j++]= other[i];
+
+    return tmp;
 }
 
 // Overloaded addition assignment operator.
@@ -232,6 +257,21 @@ Vector<T> &Vector<T>::operator+=(const Vector<T> &other) {
     // 4. Copy the elements from the other vector
     // 5. Clean up and reassign
     // 6. Return *this
+    size_t tmpCapacity= (this->space+other.size())*2;
+    T* tmp= new T[tmpCapacity];
+
+    size_t j=0;
+    for(size_t i=0;i<this->space;i++)
+        tmp[j++]= this->arr[i];
+    for(size_t i=0;i<other.size();i++)
+        tmp[j++]= other[i];
+
+    this->space= j;
+    this->capacity= this->space*2;
+    delete [] this->arr;
+    this->arr= tmp;
+
+    return *this;
 }
 
 int main() {
