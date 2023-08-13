@@ -82,7 +82,7 @@ template <typename T>
 Vector<T>::Vector(size_t len, T value) : space(len), capacity(len * 2) {
     // TODO: Allocate memory for the array and initialize it with the given value.
     arr= new T[capacity];
-    for(int i=0;i<len;i++)
+    for(size_t i=0;i<len;i++)
         arr[i]= value;
 }
 
@@ -131,7 +131,7 @@ void Vector<T>::push_back(const T &value) {
     if(space==capacity){
         capacity *= 2;
         T* tmp= new T[capacity];
-        for(int i=0;i<space;i++)
+        for(size_t i=0;i<space;i++)
             tmp[i]= arr[i];
         delete [] arr;
         arr= tmp;
@@ -172,7 +172,7 @@ Vector<T> &Vector<T>::operator=(const Vector<T> &other) {
     delete [] this->arr;
 
     this->arr= new T[this->capacity];
-    for(int i=0;i<this->space;i++)
+    for(size_t i=0;i<this->space;i++)
         this->arr[i]= other[i];
     return *this;
 }
@@ -207,7 +207,7 @@ std::ostream &operator<<(std::ostream &out, const Vector<T> &v) {
     // TODO
     out << "[";
     bool output= false;
-    for(int i=0;i<v.size();i++){
+    for(size_t i=0;i<v.size();i++){
         if(output)
             out << ", ";
         output= true;
@@ -238,9 +238,9 @@ Vector<T> Vector<T>::operator+(const Vector<T> &other) const {
     Vector<T> tmp(this->space+other.size());
     
     size_t j=0;
-    for(int i=0;i<this->size();i++)
+    for(size_t i=0;i<this->size();i++)
         tmp[j++]= this->arr[i];
-    for(int i=0;i<other.size();i++)
+    for(size_t i=0;i<other.size();i++)
         tmp[j++]= other[i];
 
     return tmp;
