@@ -73,7 +73,6 @@ template <typename T>
 Vector<T>::Vector(size_t len) : space(len), capacity(len * 2) {
     // TODO: Allocate memory for the array and initialize it with default values.
     arr= new T[capacity];
-    
 }
 
 // Constructor with length and initial value
@@ -82,6 +81,9 @@ Vector<T>::Vector(size_t len) : space(len), capacity(len * 2) {
 template <typename T>
 Vector<T>::Vector(size_t len, T value) : space(len), capacity(len * 2) {
     // TODO: Allocate memory for the array and initialize it with the given value.
+    arr= new T[capacity];
+    for(int i=0;i<len;i++)
+        arr[i]= value;
 }
 
 // Constructor with initializer list
@@ -104,12 +106,19 @@ Vector<T>::Vector(std::initializer_list<T> initList)
 template <typename T>
 Vector<T>::Vector(const Vector &other) {
     // TODO: Copy all properties from other to this vector.
+    capacity= other.size()*2;
+    space= other.size();
+    arr= new T[capacity];
+    size_t j=0;
+    for(auto i: other)
+        arr[j++]= i;
 }
 
 // Destructor
 template <typename T>
 Vector<T>::~Vector() {
     // TODO: Free up dynamically allocated memory.
+    delete [] arr;
 }
 
 // Append an element to the end of the vector
@@ -119,6 +128,15 @@ void Vector<T>::push_back(const T &value) {
     // TODO: Check if the vector is full.
     // If so, double the capacity and reassign the array pointer.
     // Then append the element to the end of the vector.
+    if(space==capacity){
+        capacity *= 2;
+        T* tmp= new T[capacity];
+        for(int i=0;i<space;i++)
+            tmp[i]= arr[i];
+        delete [] arr;
+        arr= tmp;
+    }
+    arr[space++]= value;
 }
 
 // Remove and return the last element of the vector
@@ -126,6 +144,7 @@ template <typename T>
 T Vector<T>::pop_back() {
     if (space > 0) {
         // TODO: Remove and return the last element of the vector.
+        return arr[--space];
     }
     else {
         throw std::out_of_range("Vector is empty");
@@ -136,6 +155,7 @@ T Vector<T>::pop_back() {
 template <typename T>
 size_t Vector<T>::size() const {
     // TODO:
+    return space;
 }
 
 // Overloaded assignment operator
@@ -147,6 +167,12 @@ Vector<T> &Vector<T>::operator=(const Vector<T> &other) {
     // 1. free up the memory of the current vector.
     // 2. copy all properties from other to this vector.
     // 3. return *this.
+    this->capacity= other.size()*2;
+    this->space= other.size();
+    delete [] this->arr;
+
+    this->arr= new T[this->capacity];
+    for(int i=0;i<)
 }
 
 // Overloaded subscript operator.
