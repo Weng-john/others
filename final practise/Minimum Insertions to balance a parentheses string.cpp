@@ -12,12 +12,19 @@ public:
                 continue;
             }
             if((ind+1)<s.size() && s[ind+1]==')'){
-                if(left>0){
+                if(left>0)
                     left--;
-                }
+                else
+                    add++;
+                ind++;
+                continue;
             }
-            add++;
-            left--;
+            if(left>0){
+                add++;
+                left--;
+            }
+            else
+                add += 2;
         }
         add += (left*2);
         return add;
